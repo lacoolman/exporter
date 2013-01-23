@@ -12,6 +12,7 @@
 namespace Exporter\Writer;
 
 //TODO library for mPDF
+define("_MPDF_TEMP_PATH", __DIR__.'/../../../../../web/files/tmp/');
 include_once __DIR__.'/../../../../bundles/TFox/Bundle/MpdfPortBundle/mpdf/mpdf.php';
 
 use Exporter\Exception\InvalidDataFormatException;
