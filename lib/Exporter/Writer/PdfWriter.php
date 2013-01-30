@@ -29,6 +29,14 @@ class PdfWriter implements WriterInterface
 
     protected $html;
 
+    protected $css =
+        'table {border-collapse: collapse; width: 100%;}
+        .header {border: 1px solid black}
+        .date {text-align: left; border-bottom: 1px solid black;}';
+
+    protected $showDate = false;
+
+    protected $titles = [];
     /**
      * @throws \RuntimeException
      *
@@ -51,7 +59,7 @@ class PdfWriter implements WriterInterface
      */
     public function open()
     {
-        $this->html .= "<html><body><table border='1' style='border-collapse: collapse'>";
+        $this->html .= "<html><head>";
     }
 
     /**
@@ -60,6 +68,7 @@ class PdfWriter implements WriterInterface
     public function close()
     {
         $this->html .= "</table></body></html>";
+
         $mpdf = new \mPDF('utf-8');
 
         $mpdf->WriteHTML($this->html);
@@ -93,14 +102,41 @@ class PdfWriter implements WriterInterface
         if ($this->position > 0) {
             return;
         }
-
+        $date = date('d.m.Y H:i:s');
+        $this->html .= sprintf('<style type="text/css">%s</style></head><body><table>', $this->css);
+        if ($this->showDate) {
+            $this->html .= sprintf('<tr><td class="date" colspan="%s">%s</tr>', count($data), $date);
+        }
+        for ($i = 0; $i < count($this->titles); $i++) {
+            $this->html .= sprintf('<tr><th colspan="%s">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i]));
+        }
         if ($this->showHeaders) {
             $this->html .= '<tr>';
             foreach ($data as $header => $value) {
-                $this->html .= sprintf('<th>%s</th>', $header);
+                $this->html .= sprintf('<th class="header">%s</th>', $header);
             }
             $this->html .= '</tr>';
             $this->position++;
         }
+    }
+
+    public function setShowDate($showDate)
+    {
+        $this->showDate = $showDate;
+    }
+
+    public function getShowDate()
+    {
+        return $this->showDate;
+    }
+
+    public function setTitles($titles)
+    {
+        $this->titles = $titles;
+    }
+
+    public function getTitles()
+    {
+        return $this->titles;
     }
 }

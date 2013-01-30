@@ -77,7 +77,7 @@ class DoctrineORMQuerySourceIterator implements SourceIteratorInterface
         if (is_array($value) or $value instanceof \Traversable) {
             $value = null;
         } elseif ($value instanceof \DateTime) {
-            $value = $value->format('r');
+            $value = $value->format('d.m.Y H:i:s');
         } elseif (is_object($value)) {
             $value = (string) $value;
         }
