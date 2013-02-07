@@ -118,6 +118,9 @@ class PdfWriter implements WriterInterface
             $this->html .= '</tr>';
             $this->position++;
         }
+        if (!count($data)) {
+            $this->html .= '<tr><td>Отсутствуют исходные данные!</tr>';
+        }
     }
 
     public function setShowDate($showDate)

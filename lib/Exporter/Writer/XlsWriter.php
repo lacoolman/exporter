@@ -109,6 +109,9 @@ class XlsWriter implements WriterInterface
             fwrite($this->file, '</tr>');
             $this->position++;
         }
+        if (!count($data)) {
+            fwrite($this->file, '<tr><td>Отсутствуют исходные данные!</tr>');
+        }
     }
 
     public function setShowDate($showDate)
