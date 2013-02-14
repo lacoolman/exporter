@@ -48,7 +48,9 @@ class PdfWriter implements WriterInterface
         $this->filename    = $filename;
         $this->showHeaders = $showHeaders;
         $this->position    = 0;
-
+        if (!is_dir(_MPDF_TEMP_PATH)) {
+            mkdir(_MPDF_TEMP_PATH);
+        }
         if (is_file($filename)) {
             throw new \RuntimeException(sprintf('The file %s already exist', $filename));
         }
