@@ -26,7 +26,7 @@ class XlsWriter implements WriterInterface
     protected $css =
         'table {border-collapse: collapse; width: 100%;}
         .header {border: 1px solid black}
-        .date {text-align: left; border-bottom: 1px solid black;}';
+        .date {border-bottom: 1px solid black;}';
 
     protected $showDate = false;
 
@@ -76,7 +76,7 @@ class XlsWriter implements WriterInterface
 
         fwrite($this->file, '<tr>');
         foreach ($data as $value) {
-            fwrite($this->file, sprintf('<td>%s</td>', $value));
+            fwrite($this->file, sprintf('<td align="center">%s</td>', $value));
         }
         fwrite($this->file, '</tr>');
 
@@ -96,7 +96,7 @@ class XlsWriter implements WriterInterface
         $date = date('d.m.Y H:i:s');
         fwrite($this->file, sprintf('<style type="text/css">%s</style></head><body><table>', $this->css));
         if ($this->showDate) {
-            fwrite($this->file, sprintf('<tr><td class="date" colspan="%s">%s</tr>', count($data), $date));
+            fwrite($this->file, sprintf('<tr><td class="date" colspan="%s" align="left">%s</tr>', count($data), $date));
         }
         for ($i = 0; $i < count($this->titles); $i++) {
             fwrite($this->file, sprintf('<tr><th colspan="%s">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i])));

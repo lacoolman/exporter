@@ -32,7 +32,7 @@ class PdfWriter implements WriterInterface
     protected $css =
         'table {border-collapse: collapse; width: 100%;}
         .header {border: 1px solid black}
-        .date {text-align: left; border-bottom: 1px solid black;}';
+        .date {border-bottom: 1px solid black;}';
 
     protected $showDate = false;
 
@@ -87,7 +87,7 @@ class PdfWriter implements WriterInterface
 
         $this->html .= '<tr>';
         foreach ($data as $value) {
-            $this->html .= sprintf('<td>%s</td>', $value);
+            $this->html .= sprintf('<td align="center">%s</td>', $value);
         }
         $this->html .= '</tr>';
 
@@ -107,7 +107,7 @@ class PdfWriter implements WriterInterface
         $date = date('d.m.Y H:i:s');
         $this->html .= sprintf('<style type="text/css">%s</style></head><body><table>', $this->css);
         if ($this->showDate) {
-            $this->html .= sprintf('<tr><td class="date" colspan="%s">%s</tr>', count($data), $date);
+            $this->html .= sprintf('<tr><td class="date" colspan="%s" align="left">%s</tr>', count($data), $date);
         }
         for ($i = 0; $i < count($this->titles); $i++) {
             $this->html .= sprintf('<tr><th colspan="%s">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i]));
