@@ -25,7 +25,7 @@ class XlsWriter implements WriterInterface
 
     protected $css =
         'table {border-collapse: collapse; width: 100%;}
-        .header {border: 1px solid black}
+        .title {border-top: 0; border-left: 0; border-right: 0;}
         .date {border-bottom: 1px solid black;}';
 
     protected $showDate = false;
@@ -94,17 +94,17 @@ class XlsWriter implements WriterInterface
             return;
         }
         $date = date('d.m.Y H:i:s');
-        fwrite($this->file, sprintf('<style type="text/css">%s</style></head><body><table>', $this->css));
+        fwrite($this->file, sprintf('<style type="text/css">%s</style></head><body>', $this->css));
         if ($this->showDate) {
-            fwrite($this->file, sprintf('<tr><td class="date" colspan="%s" align="left">%s</tr>', count($data), $date));
+            fwrite($this->file, sprintf('<p align="left"><small>%s</small></p><table border="1">', $date));
         }
         for ($i = 0; $i < count($this->titles); $i++) {
-            fwrite($this->file, sprintf('<tr><th colspan="%s">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i])));
+            fwrite($this->file, sprintf('<tr><th colspan="%s" class="title">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i])));
         }
         if ($this->showHeaders) {
             fwrite($this->file, '<tr>');
             foreach ($data as $header => $value) {
-                fwrite($this->file, sprintf('<th class="header">%s</th>', $header));
+                fwrite($this->file, sprintf('<th>%s</th>', $header));
             }
             fwrite($this->file, '</tr>');
             $this->position++;

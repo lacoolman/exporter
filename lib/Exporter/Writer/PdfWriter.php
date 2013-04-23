@@ -31,7 +31,7 @@ class PdfWriter implements WriterInterface
 
     protected $css =
         'table {border-collapse: collapse; width: 100%;}
-        .header {border: 1px solid black}
+        .title {border-top: 0; border-left: 0; border-right: 0;}
         .date {border-bottom: 1px solid black;}';
 
     protected $showDate = false;
@@ -105,17 +105,17 @@ class PdfWriter implements WriterInterface
             return;
         }
         $date = date('d.m.Y H:i:s');
-        $this->html .= sprintf('<style type="text/css">%s</style></head><body><table>', $this->css);
+        $this->html .= sprintf('<style type="text/css">%s</style></head><body>', $this->css);
         if ($this->showDate) {
-            $this->html .= sprintf('<tr><td class="date" colspan="%s" align="left">%s</tr>', count($data), $date);
+            $this->html .= sprintf('<p align="left"><small>%s</small><table border="1">', $date);
         }
         for ($i = 0; $i < count($this->titles); $i++) {
-            $this->html .= sprintf('<tr><th colspan="%s">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i]));
+            $this->html .= sprintf('<tr><th colspan="%s" class="title">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i]));
         }
         if ($this->showHeaders) {
             $this->html .= '<tr>';
             foreach ($data as $header => $value) {
-                $this->html .= sprintf('<th class="header">%s</th>', $header);
+                $this->html .= sprintf('<th>%s</th>', $header);
             }
             $this->html .= '</tr>';
             $this->position++;
