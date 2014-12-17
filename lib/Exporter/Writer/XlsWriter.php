@@ -148,13 +148,13 @@ class XlsWriter implements WriterInterface
         $date = date('d.m.Y H:i:s');
         fwrite($this->file, sprintf('<style type="text/css">%s</style></head><body>', $this->css));
         if($this->title) {
-            fwrite($this->file, sprintf('<a align="left">%s</a></br>', $this->title));
+            fwrite($this->file, sprintf('<p align="left">%s</p>', $this->title));
         }
         if($this->branch) {
-            fwrite($this->file, sprintf('<a align="left">%s</a></br>', $this->branch));
+            fwrite($this->file, sprintf('<p align="left">%s</p>', $this->branch));
         }
         if($this->period) {
-            fwrite($this->file, sprintf('<a align="left">%s</a></br>', $this->period));
+            fwrite($this->file, sprintf('<p align="left">%s</p>', $this->period));
         }
         if ($this->showDate) {
             fwrite($this->file, sprintf('<p align="left">Дата выгрузки: %s</p><table border="1">', $date));
