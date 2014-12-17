@@ -83,6 +83,58 @@ class XlsWriter implements WriterInterface
         $this->position++;
     }
 
+    protected $title;
+    protected $branch;
+    protected $period;
+
+    /**
+     * @param mixed $branch
+     */
+    public function setBranch($branch)
+    {
+        $this->branch = $branch;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBranch()
+    {
+        return $this->branch;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $period
+     */
+    public function setPeriod($period)
+    {
+        $this->period = $period;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPeriod()
+    {
+        return $this->period;
+    }
+
     /**
      * @param $data
      *
@@ -95,9 +147,19 @@ class XlsWriter implements WriterInterface
         }
         $date = date('d.m.Y H:i:s');
         fwrite($this->file, sprintf('<style type="text/css">%s</style></head><body>', $this->css));
-        if ($this->showDate) {
-            fwrite($this->file, sprintf('<p align="left"><small>%s</small></p><table border="1">', $date));
+        if($this->title) {
+            fwrite($this->file, sprintf('<a align="left">%s</a></br>', $this->title));
         }
+        if($this->branch) {
+            fwrite($this->file, sprintf('<a align="left">%s</a></br>', $this->branch));
+        }
+        if($this->period) {
+            fwrite($this->file, sprintf('<a align="left">%s</a></br>', $this->period));
+        }
+        if ($this->showDate) {
+            fwrite($this->file, sprintf('<p align="left">Дата выгрузки: %s</p><table border="1">', $date));
+        }
+
         for ($i = 0; $i < count($this->titles); $i++) {
             fwrite($this->file, sprintf('<tr><th colspan="%s" class="title">%s</th></tr>', count($data), str_replace('%date%', $date, $this->titles[$i])));
         }
