@@ -14,7 +14,7 @@ namespace Exporter\Source;
 use Exporter\Exception\InvalidMethodCallException;
 use Doctrine\ORM\Query;
 use Exporter\Source\SourceIteratorInterface;
-use Symfony\Component\Form\Util\PropertyPath;
+use Symfony\Component\PropertyAccess\PropertyPath;
 
 class DoctrineORMQuerySourceIterator implements SourceIteratorInterface
 {
